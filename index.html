@@ -33,7 +33,6 @@
                 raycaster="objects: .clickable"
                 emitevents="true"
                 cursor="fuse: false; rayOrigin: mouse;"
-                id="markerA"
             >
                 <a-entity
                     id="bowser-model"
@@ -45,15 +44,43 @@
                 ></a-entity>
 
                 <a-text
-                    value="hello world"
+                    id="story-text"
+                    value="你好！歡迎來到AR世界～"
                     position="0 1 -0.5"
                     rotation="-90 0 0"
+                    color="white"
+                    scale="2 2 2"
+                    class="clickable"
                 ></a-text>
 
-                
             </a-marker>
 
             <a-entity camera></a-entity>
         </a-scene>
+
+        <!-- 對話控制腳本 -->
+        <script>
+            const textList = [
+                "你好！歡迎來到AR世界～",
+                "這是第二句文字，你點得很好！",
+                "第三句出現啦，準備結束囉～"
+            ];
+
+            let textIndex = 0;
+            document.addEventListener("DOMContentLoaded", () => {
+                const textEl = document.querySelector("#story-text");
+                const modelEl = document.querySelector("#bowser-model");
+
+                const advanceText = () => {
+                    if (textIndex < textList.length - 1) {
+                        textIndex++;
+                        textEl.setAttribute("value", textList[textIndex]);
+                    }
+                };
+
+                textEl.addEventListener("click", advanceText);
+                modelEl.addEventListener("click", advanceText);
+            });
+        </script>
     </body>
 </html>
