@@ -17,10 +17,12 @@
       embedded
       gesture-detector
     >
+      <!-- 載入模型資源 -->
       <a-assets>
         <a-asset-item id="animated-asset" src="asset.gltf"></a-asset-item>
       </a-assets>
 
+      <!-- Marker 設定 -->
       <a-marker
         type="pattern"
         preset="custom"
@@ -29,7 +31,7 @@
         emitevents="true"
         cursor="fuse: false; rayOrigin: mouse;"
       >
-        <!-- 蝴蝶模型 -->
+        <!-- 3D 模型 -->
         <a-entity
           id="bowser-model"
           scale="1 1 1"
@@ -39,14 +41,23 @@
           gesture-handler
         ></a-entity>
 
-        <!-- 文字顯示，這次用 mesh-based 方式讓它一定出現 -->
-        <a-entity
-          text="value: 這是一隻蝴蝶; color: #FF69B4; align: center; width: 4; side: double;"
-          position="0 1.5 0"
-          look-at="[camera]"
-        ></a-entity>
+        <!-- 浮在模型上方的白底文字 -->
+        <a-entity 
+          geometry="primitive: plane; height: 0.4; width: 2" 
+          material="color: white; opacity: 0.8"
+          position="0 2 0"
+          rotation="-90 0 0"
+        >
+          <a-entity 
+            text="value: 測試文字顯示成功; color: black; align: center; width: 4; side: double;"
+            position="0 0 0.01"
+            rotation="0 0 0"
+            look-at="[camera]"
+          ></a-entity>
+        </a-entity>
       </a-marker>
 
+      <!-- AR 相機 -->
       <a-entity camera></a-entity>
     </a-scene>
   </body>
