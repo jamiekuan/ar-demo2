@@ -15,7 +15,6 @@
       loading-screen="enabled: false;"
       renderer="logarithmicDepthBuffer: true;"
       arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
-      id="scene"
       embedded
       gesture-detector
     >
@@ -32,21 +31,28 @@
         emitevents="true"
         cursor="fuse: false; rayOrigin: mouse;"
       >
-        <!-- 模型 + 文字包在一起 -->
-        <a-entity id="bowser-model" scale="1 1 1" gltf-model="#animated-asset" animation-mixer="loop: repeat" class="clickable" gesture-handler>
-          <!-- 文字固定在模型下方 -->
-          <a-text
-            id="story-text"
-            value="Congrats! You've found the right treasure!"
-            position="0 -1 0"
-            rotation="-90 0 0"
-            align="center"
-            color="white"
-            width="2"
-            side="double"
-          ></a-text>
-        </a-entity>
+        <!-- 模型本身 -->
+        <a-entity
+          id="bowser-model"
+          scale="1 1 1"
+          animation-mixer="loop: repeat"
+          gltf-model="#animated-asset"
+          class="clickable"
+          gesture-handler
+        ></a-entity>
       </a-marker>
+
+      <!-- 文字固定在畫面下方 -->
+      <a-entity position="0 -0.7 -2">
+        <a-text
+          id="story-text"
+          value="Congrats! You've found the right treasure!"
+          align="center"
+          color="#FFFFFF"
+          width="2"
+          side="double"
+        ></a-text>
+      </a-entity>
 
       <a-entity camera></a-entity>
     </a-scene>
@@ -70,8 +76,7 @@
           if (textIndex < textList.length - 1) {
             textIndex++;
             textEl.setAttribute("value", textList[textIndex]);
-            const delay = 3000;
-            setTimeout(showNextText, delay);
+            setTimeout(showNextText, 3000); // 後續每句 3 秒
           }
         }
 
