@@ -15,6 +15,7 @@
       loading-screen="enabled: false;"
       renderer="logarithmicDepthBuffer: true;"
       arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+      id="scene"
       embedded
       gesture-detector
     >
@@ -31,7 +32,6 @@
         emitevents="true"
         cursor="fuse: false; rayOrigin: mouse;"
       >
-        <!-- 模型本身 -->
         <a-entity
           id="bowser-model"
           scale="1 1 1"
@@ -43,13 +43,13 @@
       </a-marker>
 
       <!-- 文字固定在畫面下方 -->
-      <a-entity position="0 -0.5 -2">
+      <a-entity position="0 -0.7 -2">
         <a-text
           id="story-text"
           value="Congrats! You've found the right treasure!"
           align="center"
           color="#FFFFFF"
-          width="1"
+          width="2"
           side="double"
         ></a-text>
       </a-entity>
@@ -62,27 +62,35 @@
       const textList = [
         "Congrats! You've found the right treasure!",
         "I'm a butterfly from Giverny,",
-        "a small village in Paris.",
+        "a small village in France.",
         "We’re truly grateful...",
         "that Monet painted our village",
         "so beautifully."
       ];
 
       let textIndex = 0;
-      document.addEventListener("DOMContentLoaded", () => {
-        const textEl = document.querySelector("#story-text");
+      const textEl = () => document.querySelector("#story-text");
+
+      function playTextLoop() {
+        textIndex = 0;
+        textEl().setAttribute("value", textList[textIndex]);
 
         function showNextText() {
-          if (textIndex < textList.length - 1) {
-            textIndex++;
-            textEl.setAttribute("value", textList[textIndex]);
-            setTimeout(showNextText, 5000); // 後續每句 5 秒
+          textIndex++;
+          if (textIndex < textList.length) {
+            textEl().setAttribute("value", textList[textIndex]);
+            setTimeout(showNextText, 3000);
+          } else {
+            // 播完最後一句，10 秒後重播
+            setTimeout(playTextLoop, 10000);
           }
         }
 
-        // 第一句維持 5 秒
+        // 第一段延遲 5 秒
         setTimeout(showNextText, 5000);
-      });
+      }
+
+      document.addEventListener("DOMContentLoaded", playTextLoop);
     </script>
   </body>
 </html>
